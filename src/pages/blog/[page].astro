@@ -1,0 +1,58 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+
+const postsPerPage = 4;
+
+const sortedPosts = posts.sort(
+  (a, b) =>
+    b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+export function getStaticPaths() {
+  return [
+    { params: { page: "1" } },
+    { params: { page: "2" } },
+    { params: { page: "3" } },
+  ];
+}
+
+const currentPage = Number(Astro.params.page);
+
+const start = (currentPage - 1) * postsPerPage;
+const pagePosts = sortedPosts.slice(start, start + postsPerPage);
+
+const totalPages = Math.ceil(posts.length / postsPerPage);
+---
+
+<Layout title={`Blog - Página ${currentPage}`}>
+  <h1>Blog - Página {currentPage}</h1>
+
+  {pagePosts.map((post) => (
+    <article>
+      <h2>{post.data.title}</h2>
+
+      <p>{post.data.description}</p>
+
+      <a href={`/blog/${post.id}`}>
+        Leer más
+      </a>
+    </article>
+  ))}
+
+  <nav>
+    {currentPage > 1 && (
+      <a href={`/blog/${currentPage - 1}`}>
+        ← Anterior
+      </a>
+    )}
+
+    {currentPage < totalPages && (
+      <a href={`/blog/${currentPage + 1}`}>
+        Siguiente →
+      </a>
+    )}
+  </nav>
+</Layout>

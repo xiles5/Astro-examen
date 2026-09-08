@@ -1,0 +1,114 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+
+const sortedPosts = posts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const latestPost = sortedPosts[0];
+---
+
+<Layout title="Blog">
+  <section class="max-w-3xl mx-auto px-4 py-16">
+    
+    <!-- Título -->
+    <div class="flex flex-col gap-3 mb-14">
+      <h1 class="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">
+        Mi Blog
+      </h1>
+      <p class="text-lg text-slate-600 max-w-xl leading-relaxed">
+        Artículos sobre desarrollo web, programación y tecnología.
+      </p>
+    </div>
+
+    <!-- Último artículo -->
+    {latestPost && (
+      <article class="flex flex-col gap-6 bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100 rounded-3xl p-8 mb-16 shadow-sm hover:shadow-md transition-all duration-300">
+        
+        <div class="flex items-center gap-3">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide text-indigo-700 bg-indigo-100">
+            ✨ Último artículo
+          </span>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <h2 class="text-2xl md:text-3xl font-bold text-slate-900 leading-snug">
+            {latestPost.data.title}
+          </h2>
+
+          <p class="text-slate-600 leading-relaxed">
+            {latestPost.data.description}
+          </p>
+        </div>
+
+        <div class="flex items-center justify-between gap-4 flex-wrap pt-2">
+          <div class="flex items-center gap-3 text-sm text-slate-500">
+            {latestPost.data.author && (
+              <span class="text-slate-600">{latestPost.data.author}</span>
+            )}
+            {latestPost.data.author && <span>•</span>}
+            <time datetime={latestPost.data.pubDate.toISOString()}>
+              {latestPost.data.pubDate.toLocaleDateString("es-ES", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+          </div>
+
+          <a
+            href={`/blog/${latestPost.id}`}
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 transition-colors"
+          >
+            Leer artículo
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </article>
+    )}
+
+    <!-- Lista de todos los artículos -->
+    <div class="flex flex-col gap-6">
+      <h2 class="text-xl font-semibold text-slate-900">
+        Todos los artículos
+      </h2>
+
+      <div class="flex flex-col gap-3">
+        {sortedPosts.map((post) => (
+          <a
+            href={`/blog/${post.id}`}
+            class="group flex flex-col gap-2 p-5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-200 hover:bg-indigo-50/50 transition-all duration-200"
+          >
+            <h3 class="text-lg font-medium text-slate-900 group-hover:text-indigo-600 transition-colors">
+              {post.data.title}
+            </h3>
+
+            <p class="text-sm text-slate-600 line-clamp-2">
+              {post.data.description}
+            </p>
+
+            <div class="flex items-center gap-3 text-xs text-slate-500 mt-1">
+              {post.data.author && (
+                <span>{post.data.author}</span>
+              )}
+              {post.data.author && <span>•</span>}
+              <time datetime={post.data.pubDate.toISOString()}>
+                {post.data.pubDate.toLocaleDateString("es-ES", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+  </section>
+</Layout>

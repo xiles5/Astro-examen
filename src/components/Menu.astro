@@ -1,0 +1,93 @@
+---
+
+ const currentPath = Astro.url.pathname;
+---
+<nav class="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur-md">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+
+
+<!-- Logo -->
+<a
+  href="/"
+  class="group flex items-center gap-3"
+  aria-label="Ir al inicio"
+>
+  <div
+    class="flex h-10 w-10 items-center justify-center rounded-xl
+           bg-gray-900 text-sm font-bold text-white
+           shadow-sm transition duration-300
+           group-hover:bg-blue-600"
+  >
+    C
+  </div>
+
+  <div class="hidden sm:block">
+    <p class="font-bold leading-none text-gray-900">
+      Cristian
+    </p>
+    <p class="mt-1 text-xs text-gray-500">
+      Blog & Desarrollo Web
+    </p>
+  </div>
+</a>
+
+<!-- Navegación -->
+<div
+  class="flex items-center gap-1 rounded-xl border border-gray-200
+         bg-gray-50 p-1 shadow-sm"
+>
+
+  <!-- Inicio -->
+  <a
+    href="/"
+    class:list={[
+      "rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200",
+      currentPath === "/"
+        ? "bg-gray-900 text-white shadow-sm"
+        : "text-gray-600 hover:bg-white hover:text-gray-900"
+    ]}
+  >
+    Inicio
+  </a>
+
+  <!-- Sobre mí -->
+  <a
+    href="/about"
+    class:list={[
+      "rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200",
+      currentPath.startsWith("/about")
+        ? "bg-gray-900 text-white shadow-sm"
+        : "text-gray-600 hover:bg-white hover:text-gray-900"
+    ]}
+  >
+    Sobre mí
+  </a>
+
+  <!-- Blog -->
+  <a
+    href="/blog"
+    class:list={[
+      "rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200",
+      currentPath.startsWith("/blog")
+        ? "bg-blue-600 text-white shadow-sm"
+        : "text-gray-600 hover:bg-white hover:text-gray-900"
+    ]}
+  >
+    Blog
+  </a>
+  <a
+    href="/admin"
+    class:list={[
+      "rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200",
+      currentPath.startsWith("/admin")
+        ? "bg-blue-600 text-white shadow-sm"
+        : "text-gray-600 hover:bg-white hover:text-gray-900"
+    ]}
+  >
+    Administrar blog
+  </a>
+</div>
+
+
+  </div>
+</nav>
