@@ -1,8 +1,9 @@
 ---
-title: "¿Qué es Astro?"
-description: "Introducción al framework Astro."
-author: "Cristian"
+title: ¿Qué es Astro?
+description: Introducción al framework Astro.
+author: Cristian
 pubDate: 2026-08-20
+image: https://css-tricks.com/wp-content/uploads/2021/07/social.jpg
 tags:
   - Astro
   - Desarrollo web
