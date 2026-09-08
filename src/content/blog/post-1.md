@@ -3,7 +3,7 @@ title: ¿Qué es Astro?
 description: Introducción al framework Astro.
 author: Cristian
 pubDate: 2026-08-20
-image: https://cdn.buttercms.com/xrVbfdR5TBy4iTaY4xl7
+image: https://themefisher.com/images/blog/astro-js-intro.webp
 tags:
   - Astro
   - Desarrollo web
